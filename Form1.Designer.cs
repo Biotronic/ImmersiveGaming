@@ -1,4 +1,4 @@
-﻿namespace SkyrimMouseHider
+﻿namespace ImmersiveGaming
 {
     partial class Form1
     {
@@ -41,6 +41,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blackOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.displayChooser1 = new ImmersiveGaming.DisplayChooser();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -139,14 +140,23 @@
             this.blackOutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.blackOutToolStripMenuItem.Text = "&Black out";
             // 
+            // displayChooser1
+            // 
+            this.displayChooser1.Location = new System.Drawing.Point(93, 83);
+            this.displayChooser1.Name = "displayChooser1";
+            this.displayChooser1.Size = new System.Drawing.Size(551, 303);
+            this.displayChooser1.TabIndex = 2;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(990, 552);
+            this.Controls.Add(this.displayChooser1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
             this.Text = "Immersive Gaming";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -169,6 +179,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blackOutToolStripMenuItem;
+        private DisplayChooser displayChooser1;
     }
 }
 

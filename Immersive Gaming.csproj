@@ -7,7 +7,7 @@
     <ProjectGuid>{605F05A8-C328-436E-80F0-192448B7F375}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SkyrimMouseHider</RootNamespace>
+    <RootNamespace>ImmersiveGaming</RootNamespace>
     <AssemblyName>Skyrim Mouse Hider</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SkyrimMouseHider.Program</StartupObject>
+    <StartupObject>ImmersiveGaming.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,6 +71,13 @@
     <Compile Include="BlackoutForm.Designer.cs">
       <DependentUpon>BlackoutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorRGB.cs" />
+    <Compile Include="DisplayChooser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DisplayChooser.Designer.cs">
+      <DependentUpon>DisplayChooser.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -79,15 +86,54 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MouseHider.cs" />
+    <Compile Include="NewGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewGameForm.Designer.cs">
+      <DependentUpon>NewGameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Display.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Display.Designer.cs">
+      <DependentUpon>Display.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DisplayList.Designer.cs">
+      <DependentUpon>DisplayList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleDisplay.Designer.cs">
+      <DependentUpon>SimpleDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestControl.Designer.cs">
+      <DependentUpon>TestControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="User32.cs" />
     <Compile Include="Win32Form.cs" />
     <EmbeddedResource Include="BlackoutForm.resx">
       <DependentUpon>BlackoutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DisplayChooser.resx">
+      <DependentUpon>DisplayChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisplayList.resx">
+      <DependentUpon>DisplayList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewGameForm.resx">
+      <DependentUpon>NewGameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,6 +145,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Display.resx">
+      <DependentUpon>Display.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestControl.resx">
+      <DependentUpon>TestControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -131,6 +183,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1940_TapetaXaplikaceXInternetXExplorer.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

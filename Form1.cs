@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace SkyrimMouseHider
+namespace ImmersiveGaming
 {
     public partial class Form1 : Form
     {
@@ -51,14 +51,17 @@ namespace SkyrimMouseHider
             {new WindowInfo("Skyrim", "Skyrim", true, true)},
             {new WindowInfo("Fallout: New Vegas", "Fallout: New Vegas", true, true)},
             {new WindowInfo("Dishonored", "LaunchUnrealUWindowsClient", false, true)},
-            {new WindowInfo("Star Citizen", "CryENGINE",false,false)}
+            {new WindowInfo("Star Citizen", "CryENGINE",false,false)},
+            {new WindowInfo("StarpointGemini2", "StarpointGemini2",false,false)},
+            {new WindowInfo(null, "Arma 3",false,false)}
+
         };
 
         WindowInfo? GetWindowInfo(Win32Form frm)
         {
             if (frm != null)
             {
-                var tmp = Windows.Where(a => a.Text == frm.Text && a.ClassName == frm.ClassName);
+                var tmp = Windows.Where(a => a.ClassName == frm.ClassName && (string.IsNullOrEmpty(a.Text) || a.Text == frm.Text));
                 if (tmp.Any())
                 {
                     return tmp.First();
@@ -73,13 +76,10 @@ namespace SkyrimMouseHider
             var formInfo = GetWindowInfo(frm);
             if (formInfo.HasValue)
             {
-                if (frm != oldForm)
-                {
-                    frm.WindowStyle = User32Types.WindowStyles.MinimizeBox | User32Types.WindowStyles.Popup | User32Types.WindowStyles.Tiled | User32Types.WindowStyles.Visible;
-                    frm.WindowExStyle = User32Types.WindowExStyles.Left;
-                    frm.ClientRect = Screen.FromPoint(frm.Location).Bounds;
-                    oldForm = frm;
-                }
+                frm.WindowStyle = User32Types.WindowStyles.MinimizeBox | User32Types.WindowStyles.Popup | User32Types.WindowStyles.Tiled | User32Types.WindowStyles.Visible;
+                frm.WindowExStyle = User32Types.WindowExStyles.Left;
+                frm.ClientRect = Screen.FromPoint(frm.Location).Bounds;
+                oldForm = frm;
                 if (formInfo.Value.HideCursor)
                 {
                     MouseHider.HideCursors();
@@ -150,6 +150,10 @@ namespace SkyrimMouseHider
                 info.WorkingDirectory = loc as string;
                 Process.Start(info);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
-using SkyrimMouseHider.User32Types;
+using ImmersiveGaming.User32Types;
 using System.Drawing;
 
-namespace SkyrimMouseHider
+namespace ImmersiveGaming
 {
     static class User32
     {

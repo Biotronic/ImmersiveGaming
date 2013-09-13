@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +10,11 @@ using System.Windows.Forms;
 
 namespace ImmersiveGaming
 {
-    public partial class BlackoutForm : Form
+    public partial class TestControl : DisplayChooser
     {
-        public BlackoutForm(Screen screen)
+        public TestControl()
         {
             InitializeComponent();
-            Bounds = screen.Bounds;
-            new Win32Form(this.Handle).WindowExStyle |= User32Types.WindowExStyles.ToolWindow;
         }
     }
 }

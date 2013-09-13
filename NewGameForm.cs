@@ -10,13 +10,11 @@ using System.Windows.Forms;
 
 namespace ImmersiveGaming
 {
-    public partial class BlackoutForm : Form
+    public partial class NewGameForm : Form
     {
-        public BlackoutForm(Screen screen)
+        public NewGameForm()
         {
             InitializeComponent();
-            Bounds = screen.Bounds;
-            new Win32Form(this.Handle).WindowExStyle |= User32Types.WindowExStyles.ToolWindow;
         }
     }
 }

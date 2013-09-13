@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkyrimMouseHider
+namespace ImmersiveGaming
 {
     public class Win32Form
     {
@@ -62,9 +62,12 @@ namespace SkyrimMouseHider
             }
             set
             {
-                if (User32.SetWindowLong(handle, User32Types.WindowLongIndex.Style, (int)value) == 0)
+                if (WindowStyle != value)
                 {
-                    //throw new Win32Exception(Marshal.GetLastWin32Error());
+                    if (User32.SetWindowLong(handle, User32Types.WindowLongIndex.Style, (int)value) == 0)
+                    {
+                        throw new Win32Exception(Marshal.GetLastWin32Error());
+                    }
                 }
             }
         }
@@ -77,9 +80,12 @@ namespace SkyrimMouseHider
             }
             set
             {
-                if (User32.SetWindowLong(handle, User32Types.WindowLongIndex.ExStyle, (int)value) == 0)
+                if (WindowExStyle != value)
                 {
-                    //throw new Win32Exception(Marshal.GetLastWin32Error());
+                    if (User32.SetWindowLong(handle, User32Types.WindowLongIndex.ExStyle, (int)value) == 0)
+                    {
+                        throw new Win32Exception(Marshal.GetLastWin32Error());
+                    }
                 }
             }
         }
@@ -150,9 +156,12 @@ namespace SkyrimMouseHider
             }
             set
             {
-                User32Types.Rect rect = value;
-                User32.AdjustWindowRectEx(ref rect, WindowStyle, HasMenu, WindowExStyle);
-                User32.SetWindowPos(handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder);
+                if (ClientRect != value)
+                {
+                    User32Types.Rect rect = value;
+                    User32.AdjustWindowRectEx(ref rect, WindowStyle, HasMenu, WindowExStyle);
+                    User32.SetWindowPos(handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder);
+                }
             }
         }
 
@@ -174,7 +183,10 @@ namespace SkyrimMouseHider
             }
             set
             {
-                User32.SetWindowPos(handle, IntPtr.Zero, value.X, value.Y, 0, 0, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreResize | User32Types.SetWindowPosFlags.FrameChanged);
+                if (Location != value)
+                {
+                    User32.SetWindowPos(handle, IntPtr.Zero, value.X, value.Y, 0, 0, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreResize | User32Types.SetWindowPosFlags.FrameChanged);
+                }
             }
         }
 
@@ -188,7 +200,10 @@ namespace SkyrimMouseHider
             }
             set
             {
-                User32.SetWindowPos(handle, IntPtr.Zero, 0, 0, value.Width, value.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreMove);
+                if (Size != value)
+                {
+                    User32.SetWindowPos(handle, IntPtr.Zero, 0, 0, value.Width, value.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreMove);
+                }
             }
         }
 

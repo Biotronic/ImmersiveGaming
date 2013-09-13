@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkyrimMouseHider
+namespace ImmersiveGaming
 {
     public abstract class Enums<Temp> where Temp : class
     {
