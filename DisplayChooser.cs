@@ -22,7 +22,7 @@ namespace ImmersiveGaming
             public SelectableDisplay()
             {
                 _selected = false;
-                SelectedColor = Color.FromArgb(130, 162, 221);
+                SelectedColor = Color.FromArgb(135, 167, 220);
                 BorderColor = Color.FromArgb(220, 220, 220);
             }
 
@@ -55,6 +55,10 @@ namespace ImmersiveGaming
                     if (value != _borderColor)
                     {
                         _borderColor = value;
+                        if (!Selected)
+                        {
+                            base.BorderColor = _borderColor;
+                        }
                         Invalidate();
                     }
                 }
@@ -71,6 +75,10 @@ namespace ImmersiveGaming
                     if (value != _selectedColor)
                     {
                         _selectedColor = value;
+                        if (Selected)
+                        {
+                            base.BorderColor = _selectedColor;
+                        }
                         Invalidate();
                     }
                 }
@@ -94,8 +102,24 @@ namespace ImmersiveGaming
 
         protected override Display CreateDisplay(Screen screen)
         {
-            return new SelectableDisplay();
+            var disp = new SelectableDisplay();
+            disp.SelectedChanged += disp_SelectedChanged;
+            return disp;
         }
+
+        void disp_SelectedChanged(object sender, EventArgs e)
+        {
+            OnMonitorSelectedChanged(new MonitorEventArgs(sender as Display));
+        }
+        virtual protected void OnMonitorSelectedChanged(MonitorEventArgs e)
+        {
+            if (MonitorSelectedChanged != null)
+            {
+                MonitorSelectedChanged(this, e);
+            }
+        }
+
+        public event EventHandler<MonitorEventArgs> MonitorSelectedChanged;
 
         protected override void OnMonitorClick(MonitorEventArgs e)
         {

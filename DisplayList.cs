@@ -254,13 +254,16 @@ namespace ImmersiveGaming
 
             var scale = Math.Min(scaleW, scaleH);
 
+            var offsetX = (int)((Width - totalBounds.Width * scale) / 2 - totalBounds.Left * scale);
+            var offsetY = (int)((Height - totalBounds.Height * scale) / 2 - totalBounds.Top * scale);
+
             foreach (var item in monitors)
             {
                 var screenBounds = item.Item1.Bounds;
                 var monitor = item.Item2;
                 monitor.Bounds = new Rectangle(
-                    (int)((screenBounds.Left - totalBounds.Left) * scale),
-                    (int)((screenBounds.Top - totalBounds.Top) * scale),
+                    (int)(screenBounds.Left * scale) + offsetX,
+                    (int)(screenBounds.Top * scale) + offsetY,
                     (int)(screenBounds.Right * scale) - (int)((screenBounds.Left - totalBounds.Left) * scale),
                     (int)(screenBounds.Bottom * scale) - (int)((screenBounds.Top - totalBounds.Top) * scale)
                     );

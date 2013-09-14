@@ -178,6 +178,10 @@ namespace ImmersiveGaming
         {
             base.OnPaint(e);
 
+            var bgBrush = new SolidBrush(((ColorF)BrightFace + (ColorF)DarkFace) / 2);
+
+            e.Graphics.FillRectangle(bgBrush, ClientRectangle);
+
             float angle = (float)(Math.Atan2(ClientRectangle.Width, ClientRectangle.Height) * 180 / Math.PI);
 
             var hlPen = new Pen(new LinearGradientBrush(ClientRectangle, BrightHighlight, DarkHighlight, angle));

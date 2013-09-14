@@ -35,7 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "TestControl";
-            this.Size = new System.Drawing.Size(786, 171);
+            this.Size = new System.Drawing.Size(513, 141);
             this.ResumeLayout(false);
 
         }

@@ -146,6 +146,7 @@
             this.displayChooser1.Name = "displayChooser1";
             this.displayChooser1.Size = new System.Drawing.Size(551, 303);
             this.displayChooser1.TabIndex = 2;
+            this.displayChooser1.MonitorSelectedChanged += new System.EventHandler<ImmersiveGaming.MonitorEventArgs>(this.displayChooser1_MonitorSelectedChanged);
             // 
             // Form1
             // 

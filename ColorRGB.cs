@@ -27,13 +27,29 @@ namespace ImmersiveGaming
             this.A = a;
         }
 
+        public ColorF Clamped
+        {
+            get
+            {
+                return new ColorF(A, Math.Min(1, R), Math.Min(1, G), Math.Min(1, B));
+            }
+        }
+
+        public ColorF FullAlpha
+        {
+            get
+            {
+                return new ColorF(1.0, R, G, B);
+            }
+        }
+
         public static implicit operator Color(ColorF rgb)
         {
-            //Debug.Assert(rgb.A >= 0 && rgb.A <= 1.0);
+            Debug.Assert(rgb.A >= 0 && rgb.A <= 1.0);
             Debug.Assert(rgb.R >= 0 && rgb.R <= 1.0);
             Debug.Assert(rgb.G >= 0 && rgb.G <= 1.0);
             Debug.Assert(rgb.B >= 0 && rgb.B <= 1.0);
-            return Color.FromArgb((byte)(rgb.A > 1.0 ? 255 : rgb.A * 255), (byte)(rgb.R * 255), (byte)(rgb.G * 255), (byte)(rgb.B * 255));
+            return Color.FromArgb((byte)(rgb.A * 255), (byte)(rgb.R * 255), (byte)(rgb.G * 255), (byte)(rgb.B * 255));
         }
 
         public static explicit operator ColorF(Color c)
@@ -180,10 +196,10 @@ namespace ImmersiveGaming
                 }
             }
             ColorRGB rgb = new ColorRGB();
-            rgb.R = Convert.ToByte(r * 255.0f);
-            rgb.G = Convert.ToByte(g * 255.0f);
-            rgb.B = Convert.ToByte(b * 255.0f);
-            rgb.A = Convert.ToByte(A * 255.0f);
+            rgb.R = Convert.ToByte(Math.Max(0, r * 255.0f));
+            rgb.G = Convert.ToByte(Math.Max(0, g * 255.0f));
+            rgb.B = Convert.ToByte(Math.Max(0, b * 255.0f));
+            rgb.A = Convert.ToByte(Math.Max(0, A * 255.0f));
             return rgb;
         }
 

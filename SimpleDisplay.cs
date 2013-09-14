@@ -14,11 +14,19 @@ namespace ImmersiveGaming
     {
         public SimpleDisplay()
         {
-            _borderColor = Color.FromArgb(220, 220, 220);
+            BackColor = Color.FromArgb(97, 117, 170);
+            BorderColor = Color.FromArgb(220, 220, 220);
             InitializeComponent();
         }
-        private Color _borderColor;
 
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            BrightBack = ((ColorF)BackColor * 1.25).FullAlpha.Clamped;
+            DarkBack = ((ColorF)BackColor * 0.72).FullAlpha.Clamped;
+        }
+
+        private Color _borderColor;
         public Color BorderColor
         {
             get
@@ -31,14 +39,14 @@ namespace ImmersiveGaming
                 {
                     _borderColor = value;
 
-                    var clr = new ColorF(_borderColor) / 220.0;
+                    var clr = (ColorF)_borderColor / 220.0;
 
-                    BrightHighlight = clr * 234.0;
-                    DarkHighlight = clr * 192;
-                    BrightShadow = clr * 212;
-                    DarkShadow = clr * 130;
-                    BrightFace = clr * 248;
-                    DarkFace = clr * 178;
+                    BrightHighlight = (clr * 234).FullAlpha;
+                    DarkHighlight = (clr * 192).FullAlpha;
+                    BrightShadow = (clr * 212).FullAlpha;
+                    DarkShadow = (clr * 130).FullAlpha;
+                    BrightFace = (clr * 248).FullAlpha;
+                    DarkFace = (clr * 178).FullAlpha;
 
                     Invalidate();
                 }

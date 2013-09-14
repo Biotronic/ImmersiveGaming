@@ -155,5 +155,10 @@ namespace ImmersiveGaming
         private void Form1_Load(object sender, EventArgs e)
         {
         }
+
+        private void displayChooser1_MonitorSelectedChanged(object sender, MonitorEventArgs e)
+        {
+            e.Monitor.BackColor = System.Drawing.Color.Red;
+        }
     }
 }
