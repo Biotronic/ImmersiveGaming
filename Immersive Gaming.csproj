@@ -106,12 +106,6 @@
     <Compile Include="DisplayList.Designer.cs">
       <DependentUpon>DisplayList.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimpleDisplay.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SimpleDisplay.Designer.cs">
-      <DependentUpon>SimpleDisplay.cs</DependentUpon>
-    </Compile>
     <Compile Include="TestControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

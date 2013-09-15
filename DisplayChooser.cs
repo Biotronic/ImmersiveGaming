@@ -13,7 +13,7 @@ namespace ImmersiveGaming
     public partial class DisplayChooser : DisplayList
     {
 
-        public class SelectableDisplay : SimpleDisplay
+        public class SelectableDisplay : Display
         {
             private bool _selected;
             private Color _selectedColor;

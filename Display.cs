@@ -18,157 +18,22 @@ namespace ImmersiveGaming
         {
             InitializeComponent();
 
-            BrightHighlight = Color.FromArgb(234, 234, 234);
-            DarkHighlight = Color.FromArgb(192, 192, 192);
-            BrightShadow = Color.FromArgb(212, 212, 212);
-            DarkShadow = Color.FromArgb(130, 130, 130);
-            BrightFace = Color.FromArgb(248, 248, 248);
-            DarkFace = Color.FromArgb(178, 178, 178);
-            BrightBack = Color.FromArgb(131, 150, 199);
-            DarkBack = Color.FromArgb(58, 80, 138);
+            BackColor = Color.FromArgb(97, 117, 170);
+            BorderColor = Color.FromArgb(220, 220, 220);
         }
 
-        private Image _Wallpaper;
-        private Color _BrightHighlight;
-        private Color _DarkHighlight;
-        private Color _BrightShadow;
-        private Color _DarkShadow;
-        private Color _BrightFace;
-        private Color _DarkFace;
-        private Color _BrightBack;
-        private Color _DarkBack;
-
-        public Image Wallpaper
+        private Color _borderColor;
+        public Color BorderColor
         {
             get
             {
-                return _Wallpaper;
+                return _borderColor;
             }
             set
             {
-                if (value != _Wallpaper)
+                if (value != _borderColor)
                 {
-                    _Wallpaper = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color BrightHighlight
-        {
-            get
-            {
-                return _BrightHighlight;
-            }
-            set
-            {
-                if (value != _BrightHighlight)
-                {
-                    _BrightHighlight = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color DarkHighlight
-        {
-            get
-            {
-                return _DarkHighlight;
-            }
-            set
-            {
-                if (value != _DarkHighlight)
-                {
-                    _DarkHighlight = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color BrightShadow
-        {
-            get
-            {
-                return _BrightShadow;
-            }
-            set
-            {
-                if (value != _BrightShadow)
-                {
-                    _BrightShadow = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color DarkShadow
-        {
-            get
-            {
-                return _DarkShadow;
-            }
-            set
-            {
-                if (value != _DarkShadow)
-                {
-                    _DarkShadow = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color BrightFace
-        {
-            get
-            {
-                return _BrightFace;
-            }
-            set
-            {
-                if (value != _BrightFace)
-                {
-                    _BrightFace = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color DarkFace
-        {
-            get
-            {
-                return _DarkFace;
-            }
-            set
-            {
-                if (value != _DarkFace)
-                {
-                    _DarkFace = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color BrightBack
-        {
-            get
-            {
-                return _BrightBack;
-            }
-            set
-            {
-                if (value != _BrightBack)
-                {
-                    _BrightBack = value;
-                    Invalidate();
-                }
-            }
-        }
-        protected Color DarkBack
-        {
-            get
-            {
-                return _DarkBack;
-            }
-            set
-            {
-                if (value != _DarkBack)
-                {
-                    _DarkBack = value;
+                    _borderColor = value;
                     Invalidate();
                 }
             }
@@ -176,63 +41,71 @@ namespace ImmersiveGaming
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-
-            var bgBrush = new SolidBrush(((ColorF)BrightFace + (ColorF)DarkFace) / 2);
-
-            e.Graphics.FillRectangle(bgBrush, ClientRectangle);
-
-            float angle = (float)(Math.Atan2(ClientRectangle.Width, ClientRectangle.Height) * 180 / Math.PI);
-
-            var hlPen = new Pen(new LinearGradientBrush(ClientRectangle, BrightHighlight, DarkHighlight, angle));
-            var shPen = new Pen(new LinearGradientBrush(ClientRectangle, BrightShadow, DarkShadow, angle));
-            var fcPen = new Pen(new LinearGradientBrush(ClientRectangle, BrightFace, DarkFace, angle));
-
-            e.Graphics.DrawLine(hlPen, new Point(1, 0), new Point(ClientRectangle.Width - 2, 0));
-            e.Graphics.DrawLine(hlPen, new Point(0, 1), new Point(0, ClientRectangle.Height - 2));
-            e.Graphics.DrawLine(hlPen, new Point(ClientRectangle.Width - 3, 3), new Point(ClientRectangle.Width - 3, ClientRectangle.Height - 3));
-            e.Graphics.DrawLine(hlPen, new Point(3, ClientRectangle.Height - 3), new Point(ClientRectangle.Width - 3, ClientRectangle.Height - 3));
-
-
-            e.Graphics.DrawLine(shPen, new Point(3, 2), new Point(ClientRectangle.Width - 4, 2));
-            e.Graphics.DrawLine(shPen, new Point(2, 3), new Point(2, ClientRectangle.Height - 4));
-            e.Graphics.DrawLine(shPen, new Point(ClientRectangle.Width - 1, 1), new Point(ClientRectangle.Width - 1, ClientRectangle.Height - 2));
-            e.Graphics.DrawLine(shPen, new Point(1, ClientRectangle.Height - 1), new Point(ClientRectangle.Width - 1, ClientRectangle.Height - 1));
-
-            e.Graphics.DrawRectangle(fcPen, ClientRectangle.Deflated(1,1,2,2));
-
-            e.Graphics.Clip = new Region(e.Graphics.ClipBounds.Deflated(3,3,3,3));
+            DrawBorder(e.Graphics, ClientRectangle, BorderColor);
+            e.Graphics.Clip = new Region(e.Graphics.ClipBounds.Deflated(3, 3, 3, 3));
             OnPaintWallpaper(new PaintEventArgs(e.Graphics, e.ClipRectangle.Deflated(3, 3, 3, 3)));
         }
 
         protected virtual void OnPaintWallpaper(PaintEventArgs e)
         {
-            float angle = (float)(Math.Atan2(ClientRectangle.Width, ClientRectangle.Height) * 180 / Math.PI);
-            var screenRect = ClientRectangle.Deflated(3, 3);
+            var BrightBack = ((ColorF)BackColor * 1.25).FullAlpha.Clamped;
+            var DarkBack = ((ColorF)BackColor * 0.72).FullAlpha.Clamped;
+            DrawWallpaper(e.Graphics, ClientRectangle, BrightBack, DarkBack);
+        }
 
-            if (Wallpaper == null)
-            {
-                var wpBrush = new LinearGradientBrush(ClientRectangle, BrightBack, DarkBack, angle);
-                e.Graphics.FillRectangle(wpBrush, screenRect);
-            }
-            else
-            {
-                var wpBounds = new Rectangle(0, 0, Wallpaper.Width, Wallpaper.Height);
-                e.Graphics.DrawImage(Wallpaper, screenRect, wpBounds, GraphicsUnit.Pixel);
-            }
+        public static void DrawBorder(Graphics graphics, Rectangle rect, Color color)
+        {
+            var BrightHighlight = ((ColorF)color * 234 / 220.0).FullAlpha;
+            var DarkHighlight = ((ColorF)color * 192 / 220.0).FullAlpha;
+            var BrightShadow = ((ColorF)color * 212 / 220.0).FullAlpha;
+            var DarkShadow = ((ColorF)color * 130 / 220.0).FullAlpha;
+            var BrightFace = ((ColorF)color * 248 / 220.0).FullAlpha;
+            var DarkFace = ((ColorF)color * 178 / 220.0).FullAlpha;
 
-            var shadowColorA = ColorRGB.FromHSLA(DarkBack.GetHue() / 360, DarkBack.GetSaturation() * 2, DarkBack.GetBrightness() / 4, 0.5);
-            var shadowColorB = ColorRGB.FromHSLA(BrightBack.GetHue() / 360, BrightBack.GetSaturation() * 2, BrightBack.GetBrightness() / 4, 0.5);
+            var bgBrush = new SolidBrush(((ColorF)BrightFace + (ColorF)DarkFace) / 2);
 
-            var shadowPen = new Pen(new LinearGradientBrush(ClientRectangle, shadowColorA, shadowColorB, angle));
+            graphics.FillRectangle(bgBrush, rect);
+
+            float angle = (float)(Math.Atan2(rect.Width, rect.Height) * 180 / Math.PI);
+
+            var hlPen = new Pen(new LinearGradientBrush(rect, BrightHighlight, DarkHighlight, angle));
+            var shPen = new Pen(new LinearGradientBrush(rect, BrightShadow, DarkShadow, angle));
+            var fcPen = new Pen(new LinearGradientBrush(rect, BrightFace, DarkFace, angle));
+
+            graphics.DrawLine(hlPen, new Point(1, 0), new Point(rect.Width - 2, 0));
+            graphics.DrawLine(hlPen, new Point(0, 1), new Point(0, rect.Height - 2));
+            graphics.DrawLine(hlPen, new Point(rect.Width - 3, 3), new Point(rect.Width - 3, rect.Height - 3));
+            graphics.DrawLine(hlPen, new Point(3, rect.Height - 3), new Point(rect.Width - 3, rect.Height - 3));
+            
+            
+            graphics.DrawLine(shPen, new Point(3, 2), new Point(rect.Width - 4, 2));
+            graphics.DrawLine(shPen, new Point(2, 3), new Point(2, rect.Height - 4));
+            graphics.DrawLine(shPen, new Point(rect.Width - 1, 1), new Point(rect.Width - 1, rect.Height - 2));
+            graphics.DrawLine(shPen, new Point(1, rect.Height - 1), new Point(rect.Width - 1, rect.Height - 1));
+            
+            graphics.DrawRectangle(fcPen, rect.Deflated(1, 1, 2, 2));
+        }
+
+        public static void DrawWallpaper(Graphics graphics, Rectangle rect, Color light, Color shadow)
+        {
+            float angle = (float)(Math.Atan2(rect.Width, rect.Height) * 180 / Math.PI);
+            var screenRect = rect.Deflated(3, 3);
+
+            var wpBrush = new LinearGradientBrush(rect, light, shadow, angle);
+            graphics.FillRectangle(wpBrush, screenRect);
+
+            var shadowColorA = ColorRGB.FromHSLA(shadow.GetHue() / 360, shadow.GetSaturation() * 2, shadow.GetBrightness() / 4, 0.5);
+            var shadowColorB = ColorRGB.FromHSLA(light.GetHue() / 360, light.GetSaturation() * 2, light.GetBrightness() / 4, 0.5);
+
+            var shadowPen = new Pen(new LinearGradientBrush(rect, shadowColorA, shadowColorB, angle));
 
             shadowColorA.A /= 2;
             shadowColorB.A /= 2;
             var p1 = new SolidBrush(shadowColorA);
             var p2 = new SolidBrush(shadowColorB);
-            e.Graphics.FillRectangle(p1, 3, 4, 1, ClientRectangle.Height - 8);
-            e.Graphics.FillRectangle(p2, ClientRectangle.Width - 5, 4, 1, ClientRectangle.Height - 8);
-            e.Graphics.DrawRectangle(shadowPen, screenRect.Deflated(0, 0, 1, 1));
+            graphics.FillRectangle(p1, 3, 4, 1, rect.Height - 8);
+            graphics.FillRectangle(p2, rect.Width - 5, 4, 1, rect.Height - 8);
+            graphics.DrawRectangle(shadowPen, screenRect.Deflated(0, 0, 1, 1));
         }
     }
 

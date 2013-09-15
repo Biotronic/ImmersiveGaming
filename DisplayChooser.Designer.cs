@@ -35,7 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "DisplayChooser";
-            this.Size = new System.Drawing.Size(733, 526);
+            this.Size = new System.Drawing.Size(456, 253);
             this.ResumeLayout(false);
 
         }
