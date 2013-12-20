@@ -233,6 +233,16 @@ namespace ImmersiveGaming
             }
         }
 
+        public Process Process
+        {
+            get
+            {
+                IntPtr pid;
+                User32.GetWindowThreadProcessId(handle, out pid);
+                return Process.GetProcessById((int)pid);
+            }
+        }
+
         public override string ToString()
         {
             return Text;

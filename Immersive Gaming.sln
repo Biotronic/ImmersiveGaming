@@ -2,6 +2,17 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Immersive Gaming", "Immersive Gaming.csproj", "{605F05A8-C328-436E-80F0-192448B7F375}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048} = {5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}
+		{2798BAF0-5831-4899-BB9F-32592771A155} = {2798BAF0-5831-4899-BB9F-32592771A155}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls", "..\Controls\Controls.csproj", "{2798BAF0-5831-4899-BB9F-32592771A155}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048} = {5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +24,14 @@ Global
 		{605F05A8-C328-436E-80F0-192448B7F375}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{605F05A8-C328-436E-80F0-192448B7F375}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{605F05A8-C328-436E-80F0-192448B7F375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2798BAF0-5831-4899-BB9F-32592771A155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2798BAF0-5831-4899-BB9F-32592771A155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2798BAF0-5831-4899-BB9F-32592771A155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2798BAF0-5831-4899-BB9F-32592771A155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

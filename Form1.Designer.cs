@@ -37,11 +37,10 @@
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startSKSEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blackOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.displayChooser1 = new ImmersiveGaming.DisplayChooser();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -69,19 +68,17 @@
             this.startSKSEToolStripMenuItem1,
             this.exitToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(93, 48);
             // 
             // startSKSEToolStripMenuItem1
             // 
             this.startSKSEToolStripMenuItem1.Name = "startSKSEToolStripMenuItem1";
-            this.startSKSEToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
-            this.startSKSEToolStripMenuItem1.Text = "&Start SKSE";
-            this.startSKSEToolStripMenuItem1.Click += new System.EventHandler(this.startSKSEToolStripMenuItem_Click);
+            this.startSKSEToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem1.Text = "E&xit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -99,26 +96,26 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startSKSEToolStripMenuItem,
+            this.addToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // startSKSEToolStripMenuItem
+            // addToolStripMenuItem
             // 
-            this.startSKSEToolStripMenuItem.Name = "startSKSEToolStripMenuItem";
-            this.startSKSEToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.startSKSEToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.startSKSEToolStripMenuItem.Text = "&Start SKSE";
-            this.startSKSEToolStripMenuItem.Click += new System.EventHandler(this.startSKSEToolStripMenuItem_Click);
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -140,20 +137,11 @@
             this.blackOutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.blackOutToolStripMenuItem.Text = "&Black out";
             // 
-            // displayChooser1
-            // 
-            this.displayChooser1.Location = new System.Drawing.Point(93, 83);
-            this.displayChooser1.Name = "displayChooser1";
-            this.displayChooser1.Size = new System.Drawing.Size(551, 303);
-            this.displayChooser1.TabIndex = 2;
-            this.displayChooser1.MonitorSelectedChanged += new System.EventHandler<ImmersiveGaming.MonitorEventArgs>(this.displayChooser1_MonitorSelectedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(990, 552);
-            this.Controls.Add(this.displayChooser1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
             this.Text = "Immersive Gaming";
@@ -174,13 +162,12 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem startSKSEToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem startSKSEToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blackOutToolStripMenuItem;
-        private DisplayChooser displayChooser1;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
     }
 }
 

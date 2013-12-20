@@ -74,6 +74,7 @@ namespace ImmersiveGaming
         {
             var frm = Win32Form.ForegroundWindow;
             var formInfo = GetWindowInfo(frm);
+            var s = frm.Process.MainModule.FileName;
             if (formInfo.HasValue)
             {
                 frm.WindowStyle = User32Types.WindowStyles.MinimizeBox | User32Types.WindowStyles.Popup | User32Types.WindowStyles.Tiled | User32Types.WindowStyles.Visible;
@@ -141,17 +142,6 @@ namespace ImmersiveGaming
             Close();
         }
 
-        private void startSKSEToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var loc = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Bethesda Softworks\Skyrim", "Installed Path", null);
-            if (loc is string)
-            {
-                var info = new ProcessStartInfo("skse_loader.exe");
-                info.WorkingDirectory = loc as string;
-                Process.Start(info);
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
         }
@@ -159,6 +149,11 @@ namespace ImmersiveGaming
         private void displayChooser1_MonitorSelectedChanged(object sender, MonitorEventArgs e)
         {
             e.Monitor.BackColor = System.Drawing.Color.Red;
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new NewGameForm()).ShowDialog();
         }
     }
 }

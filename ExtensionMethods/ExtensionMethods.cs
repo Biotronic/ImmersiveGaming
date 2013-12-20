@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImmersiveGaming
+namespace Biotronic
 {
     public abstract class Enums<Temp> where Temp : class
     {

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ImmersiveGaming.User32Types;
+using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
-using ImmersiveGaming.User32Types;
-using System.Drawing;
 
 namespace ImmersiveGaming
 {
@@ -71,6 +71,9 @@ namespace ImmersiveGaming
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, ref ANIMATIONINFO pvParam, SPIF fWinIni);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out IntPtr lpdwProcessId);
     }
     namespace User32Types
     {
