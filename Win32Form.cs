@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ImmersiveGaming
 {
@@ -237,9 +235,16 @@ namespace ImmersiveGaming
         {
             get
             {
-                IntPtr pid;
-                User32.GetWindowThreadProcessId(handle, out pid);
-                return Process.GetProcessById((int)pid);
+                try
+                {
+                    IntPtr pid;
+                    User32.GetWindowThreadProcessId(handle, out pid);
+                    return Process.GetProcessById((int)pid);
+                }
+                catch (ArgumentException)
+                {
+                    return null;
+                }
             }
         }
 

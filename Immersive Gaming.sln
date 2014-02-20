@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls", "..\Controls\Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windozer", "Windozer\Windozer.csproj", "{2F7D5EC2-980D-4973-9511-FFEABEF4662C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F94D0C7-5CF3-411D-8AE6-A1CAEF6FB048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7D5EC2-980D-4973-9511-FFEABEF4662C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7D5EC2-980D-4973-9511-FFEABEF4662C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7D5EC2-980D-4973-9511-FFEABEF4662C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7D5EC2-980D-4973-9511-FFEABEF4662C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

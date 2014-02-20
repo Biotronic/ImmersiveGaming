@@ -77,11 +77,22 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FuncEqualityComparer.cs" />
+    <Compile Include="GameDisplayChooser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GameInfo.cs" />
+    <Compile Include="Immersifier.cs" />
     <Compile Include="Kernel32.cs" />
+    <Compile Include="MouseCaptureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MouseCaptureForm.Designer.cs">
+      <DependentUpon>MouseCaptureForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MouseHider.cs" />
     <Compile Include="NewGameForm.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="NewGameForm.Designer.cs">
       <DependentUpon>NewGameForm.cs</DependentUpon>
@@ -103,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MouseCaptureForm.resx">
+      <DependentUpon>MouseCaptureForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewGameForm.resx">
       <DependentUpon>NewGameForm.cs</DependentUpon>
@@ -165,6 +179,9 @@
       <Project>{5f94d0c7-5cf3-411d-8ae6-a1caef6fb048}</Project>
       <Name>ExtensionMethods</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Crosshairs.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
