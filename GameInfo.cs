@@ -102,6 +102,7 @@ namespace ImmersiveGaming
         public Comparer file;
         public bool blackoutUnused;
         public bool hideMouse;
+        public CheckState alwaysOnTop;
         public ScreenInfo[] monitors;
 
         public GameInfo()

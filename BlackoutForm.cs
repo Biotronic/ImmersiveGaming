@@ -16,7 +16,7 @@ namespace ImmersiveGaming
         {
             InitializeComponent();
             Bounds = screen.Bounds;
-            new Win32Form(this.Handle).WindowExStyle |= User32Types.WindowExStyles.ToolWindow;
+            Win32Form.Fetch(this.Handle).WindowExStyle |= User32Types.WindowExStyles.ToolWindow;
         }
     }
 }

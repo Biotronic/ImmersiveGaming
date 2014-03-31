@@ -39,6 +39,7 @@
             this.cmbFileName = new System.Windows.Forms.ComboBox();
             this.lblMonitors = new System.Windows.Forms.Label();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.chkAot = new System.Windows.Forms.CheckBox();
             this.chkHideCursor = new System.Windows.Forms.CheckBox();
             this.chkBlackout = new System.Windows.Forms.CheckBox();
             this.monitors = new ImmersiveGaming.DisplayChooser();
@@ -171,15 +172,30 @@
             // 
             // grpOptions
             // 
+            this.grpOptions.Controls.Add(this.chkAot);
             this.grpOptions.Controls.Add(this.chkHideCursor);
             this.grpOptions.Controls.Add(this.chkBlackout);
             this.grpOptions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpOptions.Location = new System.Drawing.Point(0, 430);
+            this.grpOptions.Location = new System.Drawing.Point(0, 406);
             this.grpOptions.Name = "grpOptions";
-            this.grpOptions.Size = new System.Drawing.Size(475, 69);
+            this.grpOptions.Size = new System.Drawing.Size(475, 93);
             this.grpOptions.TabIndex = 11;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Options";
+            // 
+            // chkAot
+            // 
+            this.chkAot.AutoSize = true;
+            this.chkAot.Checked = true;
+            this.chkAot.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkAot.Location = new System.Drawing.Point(8, 65);
+            this.chkAot.Name = "chkAot";
+            this.chkAot.Size = new System.Drawing.Size(89, 17);
+            this.chkAot.TabIndex = 2;
+            this.chkAot.Text = "Always on op";
+            this.chkAot.ThreeState = true;
+            this.chkAot.UseVisualStyleBackColor = true;
+            this.chkAot.CheckedChanged += new System.EventHandler(this.InputChanged);
             // 
             // chkHideCursor
             // 
@@ -267,5 +283,6 @@
         private System.Windows.Forms.CheckBox chkHideCursor;
         private System.Windows.Forms.CheckBox chkBlackout;
         private System.Windows.Forms.Button btnCapture;
+        private System.Windows.Forms.CheckBox chkAot;
     }
 }

@@ -10,12 +10,75 @@ namespace ImmersiveGaming
 {
     public class Win32Form
     {
-        IntPtr handle;
+        IntPtr _handle;
+        string _text;
+        string _className;
 
-        public Win32Form(IntPtr handle)
+        static Dictionary<IntPtr, Tuple<DateTime, Win32Form>> s_windows = new Dictionary<IntPtr, Tuple<DateTime, Win32Form>>();
+
+        public static Win32Form Fetch(IntPtr handle)
         {
-            Debug.Assert(handle != IntPtr.Zero);
-            this.handle = handle;
+            Cleanup();
+            if (s_windows.ContainsKey(handle))
+            {
+                s_windows[handle] = Tuple.Create(DateTime.Now, s_windows[handle].Item2);
+            }
+            else
+            {
+                s_windows[handle] = Tuple.Create(DateTime.Now, new Win32Form(handle));
+            }
+            return s_windows[handle].Item2;
+        }
+
+        private static void Cleanup()
+        {
+            foreach (var k in s_windows.Keys)
+            {
+                var tmp = s_windows[k];
+                if (!User32.IsWindow(k))
+                {
+                    s_windows.Remove(k);
+                    continue;
+                }
+            }
+        }
+
+        private Win32Form(IntPtr handle)
+        {
+            //Debug.Assert(handle != IntPtr.Zero);
+            this._handle = handle;
+        }
+
+        public static Win32Form BottomWindow
+        {
+            get
+            {
+                return new Win32Form(new IntPtr(1));
+            }
+        }
+
+        public static Win32Form TopWindow
+        {
+            get
+            {
+                return new Win32Form(new IntPtr(0));
+            }
+        }
+
+        public static Win32Form TopMostWindow
+        {
+            get
+            {
+                return new Win32Form(new IntPtr(-1));
+            }
+        }
+
+        public static Win32Form NoTopMostWindow
+        {
+            get
+            {
+                return new Win32Form(new IntPtr(-2));
+            }
         }
 
         public static Win32Form DesktopWindow
@@ -52,17 +115,39 @@ namespace ImmersiveGaming
             }
         }
 
+        public bool TopMost
+        {
+            get
+            {
+                return (WindowExStyle & User32Types.WindowExStyles.Topmost) == User32Types.WindowExStyles.Topmost;
+            }
+            set
+            {
+                if (value)
+                {
+                    WindowExStyle |= User32Types.WindowExStyles.Topmost;
+                    User32.SetWindowPos(_handle, TopMostWindow._handle, 0, 0, 0, 0, User32Types.SetWindowPosFlags.IgnoreResize | User32Types.SetWindowPosFlags.IgnoreMove | User32Types.SetWindowPosFlags.DoNotReposition);
+                }
+                else
+                {
+                    WindowExStyle &= ~User32Types.WindowExStyles.Topmost;
+                    User32.SetWindowLong(_handle, User32Types.WindowLongIndex.ExStyle, User32.GetWindowLong(_handle, User32Types.WindowLongIndex.ExStyle) & ~(int)(User32Types.WindowExStyles.Topmost));
+                    User32.SetWindowPos(_handle, TopWindow._handle, 0, 0, 0, 0, User32Types.SetWindowPosFlags.IgnoreResize | User32Types.SetWindowPosFlags.IgnoreMove | User32Types.SetWindowPosFlags.DoNotReposition);
+                }
+            }
+        }
+
         public User32Types.WindowStyles WindowStyle
         {
             get
             {
-                return (User32Types.WindowStyles)User32.GetWindowLong(handle, User32Types.WindowLongIndex.Style);
+                return (User32Types.WindowStyles)User32.GetWindowLong(_handle, User32Types.WindowLongIndex.Style);
             }
             set
             {
                 if (WindowStyle != value)
                 {
-                    if (User32.SetWindowLong(handle, User32Types.WindowLongIndex.Style, (int)value) == 0)
+                    if (User32.SetWindowLong(_handle, User32Types.WindowLongIndex.Style, (int)value) == 0)
                     {
                         throw new Win32Exception(Marshal.GetLastWin32Error());
                     }
@@ -74,13 +159,13 @@ namespace ImmersiveGaming
         {
             get
             {
-                return (User32Types.WindowExStyles)User32.GetWindowLong(handle, User32Types.WindowLongIndex.ExStyle);
+                return (User32Types.WindowExStyles)User32.GetWindowLong(_handle, User32Types.WindowLongIndex.ExStyle);
             }
             set
             {
                 if (WindowExStyle != value)
                 {
-                    if (User32.SetWindowLong(handle, User32Types.WindowLongIndex.ExStyle, (int)value) == 0)
+                    if (User32.SetWindowLong(_handle, User32Types.WindowLongIndex.ExStyle, (int)value) == 0)
                     {
                         throw new Win32Exception(Marshal.GetLastWin32Error());
                     }
@@ -92,17 +177,17 @@ namespace ImmersiveGaming
         {
             get
             {
-                return User32.IsWindowVisible(handle);
+                return User32.IsWindowVisible(_handle);
             }
             set
             {
                 if (value)
                 {
-                    User32.ShowWindow(handle, User32Types.ShowWindowCommand.Show);
+                    User32.ShowWindow(_handle, User32Types.ShowWindowCommand.Show);
                 }
                 else
                 {
-                    User32.ShowWindow(handle, User32Types.ShowWindowCommand.Minimize);
+                    User32.ShowWindow(_handle, User32Types.ShowWindowCommand.Minimize);
                 }
             }
         }
@@ -111,21 +196,38 @@ namespace ImmersiveGaming
         {
             get
             {
-                var tmp = new StringBuilder(User32.GetWindowTextLength(handle) + 1);
-                if (tmp.Capacity > 1)
+                if (String.IsNullOrEmpty(_text))
                 {
-                    if (User32.GetWindowText(handle, tmp, tmp.Capacity) == 0)
+                    var tmp = new StringBuilder(257);
+                    var len = User32.GetWindowTextLength(_handle);
+                    if (len == 0)
                     {
-                        throw new Win32Exception(Marshal.GetLastWin32Error());
+                        return String.Empty;
                     }
+                    if (len >= tmp.Capacity)
+                    {
+                        tmp = new StringBuilder(len + 1);
+                    }
+                    if (tmp.Capacity > 1)
+                    {
+                        if (User32.GetWindowText(_handle, tmp, tmp.Capacity) == 0)
+                        {
+                            throw new Win32Exception(Marshal.GetLastWin32Error());
+                        }
+                    }
+                    _text = tmp.ToString();
                 }
-                return tmp.ToString();
+                return _text;
             }
             set
             {
-                if (!User32.SetWindowText(handle, value))
+                if (!User32.SetWindowText(_handle, value))
                 {
                     throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
+                else
+                {
+                    _text = value;
                 }
             }
         }
@@ -135,12 +237,12 @@ namespace ImmersiveGaming
             get
             {
                 User32Types.Rect rect;
-                User32.GetWindowRect(handle, out rect);
+                User32.GetWindowRect(_handle, out rect);
                 return rect;
             }
             set
             {
-                User32.SetWindowPos(handle, IntPtr.Zero, value.Left, value.Top, value.Width, value.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder);
+                User32.SetWindowPos(_handle, IntPtr.Zero, value.Left, value.Top, value.Width, value.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder);
             }
         }
 
@@ -149,7 +251,7 @@ namespace ImmersiveGaming
             get
             {
                 User32Types.Rect rect;
-                User32.GetClientRect(handle, out rect);
+                User32.GetClientRect(_handle, out rect);
                 return rect;
             }
             set
@@ -158,7 +260,7 @@ namespace ImmersiveGaming
                 {
                     User32Types.Rect rect = value;
                     User32.AdjustWindowRectEx(ref rect, WindowStyle, HasMenu, WindowExStyle);
-                    User32.SetWindowPos(handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder);
+                    User32.SetWindowPos(_handle, IntPtr.Zero, rect.Left, rect.Top, rect.Width, rect.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.FrameChanged);
                 }
             }
         }
@@ -167,7 +269,7 @@ namespace ImmersiveGaming
         {
             get
             {
-                return User32.GetMenu(handle) != IntPtr.Zero;
+                return User32.GetMenu(_handle) != IntPtr.Zero;
             }
         }
 
@@ -176,14 +278,14 @@ namespace ImmersiveGaming
             get
             {
                 User32Types.Rect rect;
-                User32.GetWindowRect(handle, out rect);
+                User32.GetWindowRect(_handle, out rect);
                 return new Point(rect.Left, rect.Top);
             }
             set
             {
                 if (Location != value)
                 {
-                    User32.SetWindowPos(handle, IntPtr.Zero, value.X, value.Y, 0, 0, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreResize | User32Types.SetWindowPosFlags.FrameChanged);
+                    User32.SetWindowPos(_handle, IntPtr.Zero, value.X, value.Y, 0, 0, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreResize | User32Types.SetWindowPosFlags.FrameChanged);
                 }
             }
         }
@@ -193,14 +295,14 @@ namespace ImmersiveGaming
             get
             {
                 User32Types.Rect rect;
-                User32.GetWindowRect(handle, out rect);
+                User32.GetWindowRect(_handle, out rect);
                 return new Size(rect.Right - rect.Left, rect.Bottom - rect.Top);
             }
             set
             {
                 if (Size != value)
                 {
-                    User32.SetWindowPos(handle, IntPtr.Zero, 0, 0, value.Width, value.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreMove);
+                    User32.SetWindowPos(_handle, IntPtr.Zero, 0, 0, value.Width, value.Height, User32Types.SetWindowPosFlags.AsynchronousWindowPosition | User32Types.SetWindowPosFlags.DoNotActivate | User32Types.SetWindowPosFlags.DoNotChangeOwnerZOrder | User32Types.SetWindowPosFlags.IgnoreMove);
                 }
             }
         }
@@ -210,7 +312,7 @@ namespace ImmersiveGaming
             get
             {
                 List<Win32Form> result = new List<Win32Form>();
-                User32.EnumChildWindows(handle, (hwnd, b) => { result.Add(new Win32Form(hwnd)); return true; }, IntPtr.Zero);
+                User32.EnumChildWindows(_handle, (hwnd, b) => { result.Add(new Win32Form(hwnd)); return true; }, IntPtr.Zero);
                 return result;
             }
         }
@@ -219,15 +321,16 @@ namespace ImmersiveGaming
         {
             get
             {
-                var tmp = new StringBuilder(257);
-                if (tmp.Capacity > 1)
+                if (string.IsNullOrEmpty(_className))
                 {
-                    if (User32.GetClassName(handle, tmp, tmp.Capacity) == 0)
+                    var tmp = new StringBuilder(257);
+                    if (User32.GetClassName(_handle, tmp, tmp.Capacity) == 0)
                     {
                         throw new Win32Exception(Marshal.GetLastWin32Error());
                     }
+                    _className = tmp.ToString();
                 }
-                return tmp.ToString();
+                return _className;
             }
         }
 
@@ -238,7 +341,7 @@ namespace ImmersiveGaming
                 try
                 {
                     IntPtr pid;
-                    User32.GetWindowThreadProcessId(handle, out pid);
+                    User32.GetWindowThreadProcessId(_handle, out pid);
                     return Process.GetProcessById((int)pid);
                 }
                 catch (ArgumentException)
@@ -255,7 +358,7 @@ namespace ImmersiveGaming
 
         public bool Equals(Win32Form other)
         {
-            return handle == other.handle;
+            return _handle == other._handle;
         }
 
         public override bool Equals(object obj)
@@ -267,14 +370,14 @@ namespace ImmersiveGaming
             if (obj is Win32Form)
             {
                 var frm = obj as Win32Form;
-                return frm.handle == handle;
+                return frm._handle == _handle;
             }
             return false;
         }
 
         public override int GetHashCode()
         {
-            return handle.GetHashCode();
+            return _handle.GetHashCode();
         }
 
         public static bool operator ==(Win32Form a, Win32Form b)
@@ -292,7 +395,7 @@ namespace ImmersiveGaming
             }
             
             // Return true if the fields match:
-            return a.handle == b.handle;
+            return a._handle == b._handle;
         }
 
         public static bool operator !=(Win32Form a, Win32Form b)

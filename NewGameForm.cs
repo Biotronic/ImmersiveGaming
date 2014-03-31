@@ -51,6 +51,7 @@ namespace ImmersiveGaming
             chkFileName.Checked = value.file.active;
             cmbFileName.SelectedIndex = (int)value.file.operation;
             txtFileName.Text = value.file.pattern;
+            chkAot.CheckState = value.alwaysOnTop;
 
             chkBlackout.Checked = value.blackoutUnused;
             chkHideCursor.Checked = value.hideMouse;
@@ -88,6 +89,7 @@ namespace ImmersiveGaming
 
             game.blackoutUnused = chkBlackout.Checked;
             game.hideMouse = chkHideCursor.Checked;
+            game.alwaysOnTop = chkAot.CheckState;
             game.monitors = Screen.AllScreens.ZipFilter(monitors.Monitors.Cast<DisplayChooser.SelectableDisplay>().Select(a => a.Selected)).Select(a => new ScreenInfo(a)).ToArray();
         }
 

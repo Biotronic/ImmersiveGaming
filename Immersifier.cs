@@ -11,7 +11,7 @@ namespace ImmersiveGaming
     class GameImmersifier
     {
         internal GameInfo info;
-        Win32Form form;
+        internal Win32Form form;
         static List<BlackoutForm> blackoutForms = new List<BlackoutForm>();
 
         public GameImmersifier(Win32Form form, GameInfo info)
@@ -39,6 +39,17 @@ namespace ImmersiveGaming
             if (info.hideMouse)
             {
                 MouseHider.HideCursors();
+            }
+            switch (info.alwaysOnTop)
+            {
+                case CheckState.Checked:
+                    form.TopMost = true;
+                    break;
+                case CheckState.Indeterminate:
+                    break;
+                case CheckState.Unchecked:
+                    form.TopMost = false;
+                    break;
             }
             if (info.monitors.Any())
             {
@@ -99,6 +110,15 @@ namespace ImmersiveGaming
         public void Add(GameInfo info)
         {
             games.Add(info);
+        }
+
+        public void Remove(IEnumerable<int> values)
+        {
+            int[] vals = values.ToArray().OrderBy(a => a).Reverse().ToArray();
+            foreach (var i in vals)
+            {
+                games.RemoveAt(i);
+            }
         }
 
         public void Merge(AllGamesInfo other)
@@ -195,11 +215,19 @@ namespace ImmersiveGaming
             agi.Add(info);
         }
 
+        public void Remove(IEnumerable<int> values)
+        {
+            agi.Remove(values);
+        }
+
         public void Update(Win32Form form)
         {
             if (form != null)
             {
-                SetGame(form, agi.Match(form));
+                if (current == null || (current != null && current.form != form))
+                {
+                    SetGame(form, agi.Match(form));
+                }
             }
         }
 
